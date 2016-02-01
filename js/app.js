@@ -49,10 +49,15 @@ var addTask = function() {
   //Create a new list item with the text from #new-task:
   var listItem = createNewTaskElement(taskInput.value);
   //Append listItem to incompleteTasksHolder
-  incompleteTasksHolder.appendChild(listItem);
-  bindTaskEvents(listItem, taskCompleted);
+  if(!taskInput.value.trim() == "") { //Reject to traverse the value from input(new task) to incompleteTasksHolder if it's empty or even white space
+    incompleteTasksHolder.appendChild(listItem);
+    taskInput.value = "";
+  }
+  else {
+    taskInput.placeholder = "Type a task...";
+  }
 
-  taskInput.value = "";
+  bindTaskEvents(listItem, taskCompleted);
 }
 
 //Edit an existing task
@@ -65,7 +70,6 @@ var editTask = function() {
   var label = listItem.querySelector("label");
 
   var containsClass = listItem.classList.contains("editMode");
-  console.log('see? ' + containsClass);
     //if the class of the parent is .editMode
     if(containsClass) {
       //Switch from .editMode
