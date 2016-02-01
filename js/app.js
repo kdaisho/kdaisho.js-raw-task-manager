@@ -52,6 +52,7 @@ var addTask = function() {
   incompleteTasksHolder.appendChild(listItem);
   bindTaskEvents(listItem, taskCompleted);
 
+  taskInput.value = "";
 }
 
 //Edit an existing task
@@ -90,8 +91,6 @@ var deleteTask = function() {
 
   //Remove the parent list item from the <ul>
   ul.removeChild(listItem);
-
-
 }
 
 //Mark a task as complete
@@ -102,8 +101,7 @@ var taskCompleted = function() {
   completedTasksHolder.appendChild(listItem); //You could write this as well and omit the line right above: completedTasksHolder.appendChild(this.parentNode);
   bindTaskEvents(listItem, taskIncomplete);
 }
-
-//Mark a task as incomplete
+ //Mark a task as incomplete
 var taskIncomplete = function() {
   console.log("Task incomplete...");
   //Append the task list item to the #incomplete-tasks
@@ -127,9 +125,13 @@ var bindTaskEvents = function(taskListItem, checkBoxEventHandler) {
   checkbox.onchange = checkBoxEventHandler;
 }
 
-
 //Set the click handler to the addTask function
-addButton.onclick = addTask;
+var ajaxRequest = function() {
+  console.log("AJAX request");
+}
+
+addButton.addEventListener("click", ajaxRequest);
+addButton.addEventListener("click", addTask);
 
 //cycle over incompleteTasksHolder ul list items
 for(var i = 0; i < incompleteTasksHolder.children.length; i++) {
